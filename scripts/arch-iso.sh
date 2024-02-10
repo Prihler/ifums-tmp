@@ -2,7 +2,7 @@
 
 # Script to torrent the latest arch iso
 
-output=$HOME/documents/iso
+output=$HOME/documents/install_media
 
 day=$(date +%d)
 month=$(date +%m)
