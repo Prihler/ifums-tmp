@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# getting moitor ID
+monitor=$(hyprctl activeworkspace | awk -F': ' '/monitorID/ {print $2; exit}')
+
+hyprctl dispatch $1 "${monitor}${2}"
+
