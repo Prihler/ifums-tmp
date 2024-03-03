@@ -4,12 +4,21 @@
 monitor=$(hyprctl activeworkspace | awk -F': ' '/monitorID/ {print $2; exit}')
 workspace=$(hyprctl activeworkspace | awk '{match($0, /ID ([0-9]+)/, arr); print arr[1]}')
 
-if [ "$2" == "down" ] && [ $(($workspace % 10)) -gt 1 ]; then
+if [ "$2" == "down" ]; then
+
+	if [ $(($workspace % 10)) -gt 1 ]; then
 	workspace=$(( $workspace - 1 ))
 	hyprctl dispatch $1 $workspace
-elif [ "$2" == "up" ] && [ $(($workspace % 10)) -lt 9 ]; then
+else
+        hyprctl dispatch $1 "${monitor}9"
+fi
+elif [ "$2" == "up" ]; then
+	if [ $(($workspace % 10)) -lt 9 ]; then
 	workspace=$(( $workspace + 1 ))
         hyprctl dispatch $1 $workspace
+else
+	hyprctl dispatch $1 "${monitor}1"
+fi
 else
 	hyprctl dispatch $1 "${monitor}${2}"
 fi
