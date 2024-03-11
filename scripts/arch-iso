@@ -2,7 +2,7 @@
 
 # Script to torrent the latest arch iso
 
-output=$HOME/documents/install_media
+output=/var/lib/libvirt/images
 
 day=$(date +%d)
 month=$(date +%m)
@@ -10,7 +10,7 @@ year=$(date +%y)
 
 cd $output
 
-until curl -fs "https://archlinux.org/releng/releases/20$year.$month.$day/torrent/" -o arch.iso.torrent; do
+until sudo curl -fs "https://archlinux.org/releng/releases/20$year.$month.$day/torrent/" -o arch.iso.torrent; do
   if [ $day -eq 1 ]
   then
 	  day=31
@@ -32,7 +32,6 @@ until curl -fs "https://archlinux.org/releng/releases/20$year.$month.$day/torren
   fi
 done
 
-aria2c $output/arch.iso.torrent --seed-time=0.01 -d $output
+sudo aria2c $output/arch.iso.torrent --seed-time=0.01 -d $output
 
-rm $output/arch.iso.torrent
-notify-send " " "<span font='40'>Arch-iso<br/>downloaded</span>" -t  4000 -i /home/$USER/pictures/scripts-pic/notify-arch.png
+sudo rm $output/arch.iso.torrent
