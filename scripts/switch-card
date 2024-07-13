@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Define the file path
+FILE="$HOME/.config/hypr/hyprland.conf"
+
+# Check for the presence of either "12345" or "54321"
+if grep -q 'env = WLR_DRM_DEVICES,$HOME/.config/hypr/ecard:$HOME/.config/hypr/icard' "$FILE"; then
+    sed -i 's/env = WLR_DRM_DEVICES,$HOME\/\.config\/hypr\/ecard:$HOME\/\.config\/hypr\/icard/env = WLR_DRM_DEVICES,$HOME\/\.config\/hypr\/icard:$HOME\/\.config\/hypr\/ecard/g' "$FILE"
+    echo "Integrated GPU is prefered now."
+elif grep -q 'env = WLR_DRM_DEVICES,$HOME/.config/hypr/icard:$HOME/.config/hypr/ecard' "$FILE"; then
+    sed -i 's/env = WLR_DRM_DEVICES,$HOME\/\.config\/hypr\/icard:$HOME\/.config\/hypr\/ecard/env = WLR_DRM_DEVICES,$HOME\/.config\/hypr\/ecard:$HOME\/.config\/hypr\/icard/g' "$FILE"
+    echo "External GPU is prefered now."
+fi
+
+exit 0
